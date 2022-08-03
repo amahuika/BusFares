@@ -1,28 +1,34 @@
-﻿namespace BusFares.Operations
+﻿using BusFares.BusFareDTO;
+
+namespace BusFares.Operations
 {
     public class CalculateBusFares
     {
 
-        public void CalcFare(string name, bool disabled, double age, List<string> results, double ashPrice, double timPrice, double invPrice, double dunPrice, double omaPrice, double discount)
+        public List<string> CalcFare(BusDTO busDTO)
         {
 
-            if (disabled || age > 64 || age < 12)
+            if (busDTO.Disabled || busDTO.Age > 64 || busDTO.Age < 12)
             {
-                ashPrice = ashPrice - (ashPrice / 100 * discount);
-                timPrice = timPrice - (timPrice / 100 * discount);
-                invPrice = invPrice - (invPrice / 100 * discount);
-                dunPrice = dunPrice - (dunPrice / 100 * discount);
-                omaPrice = omaPrice - (omaPrice / 100 * discount);
+                busDTO.AshburtonPrice = CalcDiscount(busDTO.AshburtonPrice, busDTO.Discount);
+                busDTO.TimaruPrice = CalcDiscount(busDTO.TimaruPrice, busDTO.Discount);
+                busDTO.InvercargillPrice = CalcDiscount(busDTO.InvercargillPrice, busDTO.Discount);
+                busDTO.DunedinPrice = CalcDiscount(busDTO.DunedinPrice, busDTO.Discount);
+                busDTO.OmaruPrice = CalcDiscount(busDTO.OmaruPrice, busDTO.Discount);
 
             }
 
-            BusFareResultsAll.AllResults.Add($"Name: {name} Age: {age} Ash: {ashPrice:C} Tim: {timPrice:C} Oma: {omaPrice:C} Dun: {dunPrice:C} Inv: {invPrice:C}");
+            BusFareResultsAll.AllResults.Add($"Name: {busDTO.Name} Age: {busDTO.Age} Ash: {busDTO.AshburtonPrice:C} Tim: {busDTO.TimaruPrice:C} Oma: {busDTO.OmaruPrice:C} Dun: {busDTO.DunedinPrice:C} Inv: {busDTO.InvercargillPrice:C}");
 
-            results.AddRange(BusFareResultsAll.AllResults);
+            return BusFareResultsAll.AllResults;
 
-            results.Reverse();
+        }
 
+        private double CalcDiscount(double price, double discount)
+        {
+            price = price - (price * discount);
 
+            return price;
         }
     }
 }

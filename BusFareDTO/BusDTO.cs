@@ -7,9 +7,10 @@ namespace BusFares.BusFareDTO
         [Display(Name = "Name")]
         public string Name { get; set; }
         public int Age { get; set; }
+        [Display(Name = "Are you disabled?")]
         public bool Disabled { get; set; }
 
-        public double Discount { get; set; } = 20;
+        public double Discount { get; set; } = 0.20;
 
         [Display(Name = "Ash")]
         public double AshburtonPrice { get; set; } = 17.99;
@@ -25,7 +26,6 @@ namespace BusFares.BusFareDTO
         public double InvercargillPrice { get; set; } = 46.50;
 
 
-        public List<string> Results = new List<string>();
 
 
     }
